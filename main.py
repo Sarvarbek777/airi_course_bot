@@ -842,7 +842,7 @@ async def exit_handler(message: Message):
 # MAIN
 # ========================
 async def main():
-
+    global db_pool
     db_pool = await create_db_pool()
 
     async with db_pool.acquire() as conn:
