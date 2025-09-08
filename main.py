@@ -449,16 +449,21 @@ dp = Dispatcher()
 # ========================
 # DATABASE
 # ========================
+# async def create_db_pool():
+#     ssl_mode = "require" if DB_HOST != "localhost" else None
+#     return await asyncpg.create_pool(
+#         user=DB_USER,
+#         password=DB_PASS,
+#         database=DB_NAME,
+#         host=DB_HOST,
+#         port=DB_PORT,
+#         ssl=ssl_mode
+#     )
+
 async def create_db_pool():
-    ssl_mode = "require" if DB_HOST != "localhost" else None
-    return await asyncpg.create_pool(
-        user=DB_USER,
-        password=DB_PASS,
-        database=DB_NAME,
-        host=DB_HOST,
-        port=DB_PORT,
-        ssl=ssl_mode
-    )
+    db_url = os.getenv("DATABASE_URL")
+    return await asyncpg.create_pool(dsn=db_url, ssl="require")
+
 
 
 # ========================
