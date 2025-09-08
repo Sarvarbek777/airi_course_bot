@@ -387,6 +387,8 @@
 
 import asyncio
 import logging
+import ssl
+
 import asyncpg
 import os
 import tempfile
@@ -450,20 +452,15 @@ dp = Dispatcher()
 # ========================
 # DATABASE
 # ========================
-# async def create_db_pool():
-#     ssl_mode = "require" if DB_HOST != "localhost" else None
-#     return await asyncpg.create_pool(
-#         user=DB_USER,
-#         password=DB_PASS,
-#         database=DB_NAME,
-#         host=DB_HOST,
-#         port=DB_PORT,
-#         ssl=ssl_mode
-#     )
-
 async def create_db_pool():
     db_url = os.getenv("DATABASE_URL")
-    return await asyncpg.create_pool(dsn=db_url, ssl="require")
+
+    # SSL konteksti yaratamiz
+    ssl_context = ssl.create_default_context()
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
+
+    return await asyncpg.create_pool(dsn=db_url, ssl=ssl_context)
 
 
 
