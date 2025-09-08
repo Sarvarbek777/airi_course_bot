@@ -436,16 +436,30 @@ dp = Dispatcher()
 # ========================
 # DATABASE
 # ========================
+# async def create_db_pool():
+#     return await asyncpg.create_pool(
+#         user=DB_USER,
+#         password=DB_PASS,
+#         database=DB_NAME,
+#         host=DB_HOST,
+#         port=DB_PORT
+#     )
+#
+# db_pool = None
+# ========================
+# DATABASE
+# ========================
 async def create_db_pool():
+    ssl_mode = "require" if DB_HOST != "localhost" else None
     return await asyncpg.create_pool(
         user=DB_USER,
         password=DB_PASS,
         database=DB_NAME,
         host=DB_HOST,
-        port=DB_PORT
+        port=DB_PORT,
+        ssl=ssl_mode
     )
 
-db_pool = None
 
 # ========================
 # FSM HOLATLAR
