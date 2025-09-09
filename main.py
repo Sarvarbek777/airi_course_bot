@@ -439,13 +439,26 @@ dp = Dispatcher()
 # ========================
 # DATABASE
 # ========================
+# async def create_db_pool():
+#     return await asyncpg.create_pool(
+#         user=DB_USER,
+#         password=DB_PASS,
+#         database=DB_NAME,
+#         host=DB_HOST,
+#         port=DB_PORT
+#     )
+
+
+
 async def create_db_pool():
+    ssl_context = ssl.create_default_context()
     return await asyncpg.create_pool(
-        user=DB_USER,
-        password=DB_PASS,
-        database=DB_NAME,
-        host=DB_HOST,
-        port=DB_PORT
+        user="USERNAME",
+        password="PASSWORD",
+        database="DBNAME",
+        host="HOSTNAME",
+        port=5432,
+        ssl=ssl_context   # ⬅️ shu joy qo‘shiladi
     )
 
 
