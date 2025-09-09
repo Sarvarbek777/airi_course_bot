@@ -439,28 +439,29 @@ dp = Dispatcher()
 # ========================
 # DATABASE
 # ========================
-# async def create_db_pool():
-#     return await asyncpg.create_pool(
-#         user=DB_USER,
-#         password=DB_PASS,
-#         database=DB_NAME,
-#         host=DB_HOST,
-#         port=DB_PORT
-#     )
-#
-# db_pool = None
+async def create_db_pool():
+    return await asyncpg.create_pool(
+        user=DB_USER,
+        password=DB_PASS,
+        database=DB_NAME,
+        host=DB_HOST,
+        port=DB_PORT
+    )
+
+
+db_pool = None
 # ========================
 # DATABASE
 # ========================
-async def create_db_pool():
-    db_url = os.getenv("DATABASE_URL")
-
-    # SSL konteksti yaratamiz
-    ssl_context = ssl.create_default_context()
-    ssl_context.check_hostname = False
-    ssl_context.verify_mode = ssl.CERT_NONE
-
-    return await asyncpg.create_pool(dsn=db_url, ssl=ssl_context)
+# async def create_db_pool():
+#     db_url = os.getenv("DATABASE_URL")
+#
+#     # SSL konteksti yaratamiz
+#     ssl_context = ssl.create_default_context()
+#     ssl_context.check_hostname = False
+#     ssl_context.verify_mode = ssl.CERT_NONE
+#
+#     return await asyncpg.create_pool(dsn=db_url, ssl=ssl_context)
 
 
 
